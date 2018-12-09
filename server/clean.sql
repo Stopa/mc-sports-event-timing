@@ -1,0 +1,2 @@
+DROP DATABASE mchw;
+DROP USER mchw;
