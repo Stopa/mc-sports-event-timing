@@ -46,8 +46,8 @@ app.get('/times', (req, res) => {
 app.post('/times', (req, res) => {
   const { code, timingPoint, clockTime } = req.body;
 
-  Athlete.find({ code }, (error, athlete) => {
-    if (athlete.length === 0) {
+  Athlete.findOne({ code }, (error, athlete) => {
+    if (!athlete) {
       res.status(404).json({
         status: 'error',
         message: 'Athlete with given code not found',
@@ -64,9 +64,11 @@ app.post('/times', (req, res) => {
         } else {
           wss.clients.forEach((client) => {
             client.send(JSON.stringify({
+              name: athlete.name,
+              startNumber: athlete.startNumber,
               code,
               timingPoint,
-              clockTime
+              clockTime,
             }));
           });
 
