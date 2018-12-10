@@ -1,5 +1,6 @@
 const http = require('http');
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const ws = require('ws');
 
@@ -25,6 +26,7 @@ app.get('/athletes', (req, res) => {
 });
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/times', (req, res) => {
 
@@ -39,7 +41,31 @@ app.get('/times', (req, res) => {
       $lte: toTime,
     }
   }, (error, times) => {
-    res.json(times);
+    if (error) throw error;
+
+    const codes = times.map(t => t.code);
+
+    Athlete.find({
+      code: {
+        $in: codes
+      }
+    }, (athletes_error, athletes) => {
+      if (athletes_error) throw athletes_error;
+
+      const result = times.map((time) => {
+        const athlete = athletes.find(a => a.code === time.code);
+
+        return {
+          code: time.code,
+          timingPoint: time.timingPoint,
+          clockTime: time.clockTime,
+          name: athlete.name,
+          startNumber: athlete.startNumber,
+        };
+      });
+
+      res.json(result);
+    });
   })
 });
 
@@ -53,7 +79,8 @@ app.post('/times', (req, res) => {
         message: 'Athlete with given code not found',
       });
     } else {
-      const newTime = new Time({code, timingPoint, clockTime: new Date(clockTime*1000)});
+      const realClockTime = new Date(clockTime*1000);
+      const newTime = new Time({code, timingPoint, clockTime: realClockTime});
 
       newTime.save((dbError) => {
         if (dbError) {
@@ -68,7 +95,7 @@ app.post('/times', (req, res) => {
               startNumber: athlete.startNumber,
               code,
               timingPoint,
-              clockTime,
+              clockTime: realClockTime,
             }));
           });
 

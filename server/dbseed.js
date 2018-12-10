@@ -24,7 +24,7 @@ mongo.connect(
 
     const athletes = names.map((name, index) => ({
       code: uuid(),
-      startNumber: index,
+      startNumber: index + 1,
       name,
     }));
 
