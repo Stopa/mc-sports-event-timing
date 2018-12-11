@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "plugin:node/recommended",
+    "airbnb-base"
+  ],
+  "rules": {
+    "no-console": "off"
+  }
+}

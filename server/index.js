@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 mongoose.connect(
   `mongodb://${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.database}`,
-  { useNewUrlParser: true }
+  { useNewUrlParser: true },
 );
 
 const wss = new ws.Server({ server });
@@ -25,11 +25,10 @@ app.use(cors());
 app.get('/athletes', (req, res) => {
   Athlete.find({}, (error, athletes) => {
     res.json(athletes);
-  })
+  });
 });
 
 app.get('/times', (req, res) => {
-
   const { from, to } = req.query;
 
   const fromTime = new Date(Number.parseInt(from, 10));
@@ -39,7 +38,7 @@ app.get('/times', (req, res) => {
     clockTime: {
       $gte: fromTime,
       $lte: toTime,
-    }
+    },
   }, (error, times) => {
     if (error) throw error;
 
@@ -47,10 +46,10 @@ app.get('/times', (req, res) => {
 
     Athlete.find({
       code: {
-        $in: codes
-      }
-    }, (athletes_error, athletes) => {
-      if (athletes_error) throw athletes_error;
+        $in: codes,
+      },
+    }, (athletesError, athletes) => {
+      if (athletesError) throw athletesError;
 
       const result = times.map((time) => {
         const athlete = athletes.find(a => a.code === time.code);
@@ -66,7 +65,7 @@ app.get('/times', (req, res) => {
 
       res.json(result);
     });
-  })
+  });
 });
 
 app.post('/times', (req, res) => {
@@ -79,8 +78,8 @@ app.post('/times', (req, res) => {
         message: 'Athlete with given code not found',
       });
     } else {
-      const realClockTime = new Date(clockTime*1000);
-      const newTime = new Time({code, timingPoint, clockTime: realClockTime});
+      const realClockTime = new Date(clockTime * 1000);
+      const newTime = new Time({ code, timingPoint, clockTime: realClockTime });
 
       newTime.save((dbError) => {
         if (dbError) {
