@@ -25,7 +25,7 @@ class TimingPage extends React.Component {
   }
 
   startSocket() {
-    this.socket = new WebSocket(config.websocket_url);
+    this.socket = new WebSocket(`ws://${config.server_url}`);
 
     this.socket.onmessage = this.handleSocketMessage.bind(this);
   }

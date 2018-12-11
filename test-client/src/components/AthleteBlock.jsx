@@ -39,7 +39,7 @@ export default class AthleteBlock extends React.Component {
   saveTime(time, timingPoint) {
     const { code } = this.props;
 
-    fetch(`${config.rest_url}/times`, {
+    fetch(`${config.server_url}/times`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

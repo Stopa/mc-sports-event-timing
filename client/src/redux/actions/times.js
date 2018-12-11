@@ -52,7 +52,7 @@ export function addTime(time) {
 }
 
 export function fetchMissingTimes(from, to) {
-  return dispatch => fetch(`${config.rest_url}/times?from=${from.getTime()}&to=${to.getTime()}`)
+  return dispatch => fetch(`http://${config.server_url}/times?from=${from.getTime()}&to=${to.getTime()}`)
     .then(response => response.json())
     .then((times) => {
       times.forEach(time => dispatch(addTime(time)));

@@ -13,7 +13,7 @@ export default class AthletesPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`${config.rest_url}/athletes`)
+    fetch(`${config.server_url}/athletes`)
       .then(response => response.json())
       .then((athletes) => {
         this.setState({ athletes });

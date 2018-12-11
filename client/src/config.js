@@ -1,4 +1,3 @@
 export default {
-  websocket_url: 'ws://localhost:3000',
-  rest_url: 'http://localhost:3000',
+  server_url: 'localhost:3000',
 };
