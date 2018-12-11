@@ -19,14 +19,14 @@ mongoose.connect(
 
 const wss = new ws.Server({ server });
 
+app.use(express.json());
+app.use(cors());
+
 app.get('/athletes', (req, res) => {
   Athlete.find({}, (error, athletes) => {
     res.json(athletes);
   })
 });
-
-app.use(express.json());
-app.use(cors());
 
 app.get('/times', (req, res) => {
 

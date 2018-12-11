@@ -1,0 +1,36 @@
+.athlete-block {
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 1px solid currentColor;
+}
+
+.athlete-block:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.athlete-block__buttons {
+  display: flex;
+  justify-content: stretch;
+}
+
+.athlete-block__buttons button {
+  flex: 1 1 50%;
+  font: inherit;
+  background: #333;
+  color: white;
+  cursor: pointer;
+  border: none;
+  padding: 8px;
+  font-size: 24px;
+}
+
+.athlete-block__buttons button:hover {
+  background: #222;
+}
+
+.athlete-block__buttons button:disabled {
+  color: #333;
+  background: white;
+  cursor: not-allowed;
+}
