@@ -9,7 +9,7 @@ export default function TimesTable(props) {
 
   const sortedTimes = times.slice().sort((a, b) => {
     // element with the larger lineTime should go first
-    const lineTimeDiff = b.lineTime - a.lineTime;
+    const lineTimeDiff = moment(b.lineTime) - moment(a.lineTime);
 
     if (Number.isNaN(lineTimeDiff)) {
       // if only one element has a lineTime, it should go first
@@ -22,7 +22,7 @@ export default function TimesTable(props) {
       }
 
       // if neither has lineTime, element with the larger corridorTime should go first
-      return b.corridorTime - a.corridorTime;
+      return moment(b.corridorTime) - (a.corridorTime);
     }
 
     return lineTimeDiff;
